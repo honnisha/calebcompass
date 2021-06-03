@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class CalebCompassCommand implements CommandExecutor {
 
-	private final static String PREFIX = "§7[§eCaleb Compass§7]§r: ";
+	private final static String PREFIX = "§7[§eКомпас§7]§r: ";
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -122,7 +122,7 @@ public class CalebCompassCommand implements CommandExecutor {
 
 			if (CompassInstance.getInstance().getCompassLocation(player) != null) CompassInstance.getInstance().getCompassLocation(player).setTracking(false);
 			CompassInstance.getInstance().saveData();
-			sender.sendMessage(PREFIX + "Successfully removed track point");
+			sender.sendMessage("§aЦели компаса очищены!");
 			return true;
 		}
 

@@ -1,15 +1,11 @@
 package calebcompass.calebcompass.util;
 
 import calebcompass.calebcompass.CalebCompass;
-// import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.apache.commons.lang.StringEscapeUtils;
+
 import java.io.File;
 
 public class ConfigManager {
@@ -68,9 +64,7 @@ public class ConfigManager {
 	}
 
 	public String getString(String path) {
-		
-		String fixedString = compassConfig.getString(path);
-		return StringEscapeUtils.unescapeJava(fixedString);
+		return compassConfig.getString(path);
 	}
 
 	private void setupDefault() {
@@ -108,6 +102,8 @@ public class ConfigManager {
 		setDefaultValue("bar-style", "solid");
 
 		setDefaultValue("focus-item", "NOITEM");
+
+		setDefaultValue("betonquest-compass-update", "false");
 
 		save();
 	}

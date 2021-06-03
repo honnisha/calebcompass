@@ -1,9 +1,6 @@
 package calebcompass.calebcompass;
 
-import calebcompass.calebcompass.betonquest.CompassClear;
-import calebcompass.calebcompass.betonquest.Focus;
-import calebcompass.calebcompass.betonquest.TogglePoint;
-import calebcompass.calebcompass.betonquest.TrackEvent;
+import calebcompass.calebcompass.betonquest.*;
 import calebcompass.calebcompass.citizens.CitizensEvents;
 import calebcompass.calebcompass.citizens.CitizensInstance;
 import calebcompass.calebcompass.miscevents.ItemFocus;
@@ -12,6 +9,8 @@ import calebcompass.calebcompass.mythicmobs.MythicInstance;
 import calebcompass.calebcompass.util.CompassInstance;
 import calebcompass.calebcompass.util.ConfigManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.betonquest.betonquest.BetonQuest;
 
@@ -30,32 +29,33 @@ public final class CalebCompass extends JavaPlugin {
 		configManager = ConfigManager.getInstance();
 
 		CompassMoveEvent moveEvent = new CompassMoveEvent();
-		moveEvent.runTaskTimer(this, 0, 1);
+		moveEvent.runTaskTimer(this, 0, 3);
 
 		getServer().getPluginManager().registerEvents(new ItemFocus(), this);
 
 		getServer().getPluginCommand("calebcompass").setExecutor(new CalebCompassCommand());
 
-		if (Bukkit.getPluginManager().getPlugin("BetonQuest") != null) {
+		if (Bukkit.getServer().getPluginManager().getPlugin("BetonQuest") != null) {
+			BetonQuest bq = BetonQuest.getInstance();
+			bq.registerEvents("compasstrack", TrackEvent.class);
+			bq.registerEvents("clearcompass", CompassClear.class);
+			bq.registerEvents("togglewaypoint", TogglePoint.class);
+			bq.registerEvents("focuspoint", Focus.class);
+
+			getServer().getPluginManager().registerEvents(new TargetChange(), this);
 			log("Plugin hooked: BetonQuest");
-			BetonQuest.getInstance().registerEvents("compasstrack", TrackEvent.class);
-			BetonQuest.getInstance().registerEvents("clearcompass", CompassClear.class);
-			BetonQuest.getInstance().registerEvents("togglewaypoint", TogglePoint.class);
-			BetonQuest.getInstance().registerEvents("focuspoint", Focus.class);
 		}
 
 		if (Bukkit.getPluginManager().getPlugin("MythicMobs") != null) {
-			log("Plugin hooked: MythicMobs");
-			MythicInstance instance = MythicInstance.getInstance();
 			MythicEvents mythEvents = new MythicEvents();
-			mythEvents.runTaskTimer(this, 0, 1);
+			mythEvents.runTaskTimer(this, 0, 3);
+			log("Plugin hooked: MythicMobs");
 		}
 
 		if (Bukkit.getPluginManager().getPlugin("Citizens") != null) {
-			log("Plugin hooked: Citizens");
-			CitizensInstance instance = CitizensInstance.getInstance();
 			CitizensEvents npcEvents = new CitizensEvents();
-			npcEvents.runTaskTimer(this, 0, 1);
+			npcEvents.runTaskTimer(this, 0, 3);
+			log("Plugin hooked: Citizens");
 		}
 	}
 

@@ -122,8 +122,14 @@ public class CompassConstructor {
     }
 
     private String finalSymbols(String input) {
-        String util = Util.getSymbolStart() + replaceRegular(input.substring(0, 10)) + replaceHovered(String.valueOf(input.charAt(10))) + replaceRegular(input.substring(11)) + Util.getSymbolEnd();
-        return util;
+        return  String.format(
+                "%s%s%s%s%s",
+                Util.getSymbolStart(),
+                replaceRegular(input.substring(0, 10)),
+                replaceHovered(String.valueOf(input.charAt(10))),
+                replaceRegular(input.substring(11)),
+                Util.getSymbolEnd()
+        );
     }
 
     private void cacheWaypointSymbols(String sr) {
