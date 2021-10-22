@@ -3,7 +3,7 @@ version: 3.2
 main: calebcompass.calebcompass.CalebCompass
 api-version: 1.13
 description: CalebCompass
-softdepend: [ BetonQuest ]
+softdepend: [ BetonQuest, Citizens, MythicMobs ]
 
 commands:
   calebcompass:

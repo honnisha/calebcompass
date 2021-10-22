@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class CompassConstructor {
 
@@ -65,16 +66,20 @@ public class CompassConstructor {
     }
 
     private String makeBasicCompass(int dir) {
-        if (dir >= 40) dir -= 40;
-        startLoc = dir;
-        String overallMessage = FORMAT;
-        String over = addInWaypoints(overallMessage);
-        over = addInTracker(over);
-        over = over.substring(dir, dir + 21);
-        cacheWaypointSymbols(over);
-        over = finalSymbols(over);
-        over = addInCachedWaypoints(over);
-        return over;
+        try {
+            if (dir >= 40) dir -= 40;
+            startLoc = dir;
+            String over = addInWaypoints(FORMAT);
+            over = addInTracker(over);
+            over = over.substring(dir, dir + 21);
+            cacheWaypointSymbols(over);
+            over = finalSymbols(over);
+            over = addInCachedWaypoints(over);
+            return over;
+        } catch(StringIndexOutOfBoundsException e) {
+            Bukkit.getLogger().warning(String.format("Error in makeBasicCompass with OutOfBounds dir: %s error: %s", dir, e));
+        }
+        return "";
     }
 
     private String addInWaypoints(String str) {
